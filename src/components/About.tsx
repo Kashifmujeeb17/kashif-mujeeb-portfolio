@@ -1,9 +1,52 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Brain, Code, Database, Lightbulb } from 'lucide-react';
 
 const About: React.FC = () => {
+  const [completionYear, setCompletionYear] = useState(2000);
+  const [commencementYear, setCommencementYear] = useState(2000);
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !hasAnimated) {
+          setHasAnimated(true);
+
+          let current1 = 2000;
+          const interval1 = setInterval(() => {
+            if (current1 < 2024) {
+              current1++;
+              setCompletionYear(current1);
+            } else {
+              clearInterval(interval1);
+            }
+          }, 30);
+
+          setTimeout(() => {
+            let current2 = 2000;
+            const interval2 = setInterval(() => {
+              if (current2 < 2025) {
+                current2++;
+                setCommencementYear(current2);
+              } else {
+                clearInterval(interval2);
+              }
+            }, 30);
+          }, 200);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [hasAnimated]);
   return (
-    <section id="about" className="py-24 bg-gradient-to-b from-white to-gray-50 fade-in-section">
+    <section id="about" className="py-24 bg-gradient-to-b from-white to-gray-50 fade-in-section" ref={sectionRef}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-20">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 animate-fade-in-up">
@@ -19,20 +62,22 @@ const About: React.FC = () => {
           <div className="animate-fade-in-left">
             <h3 className="text-xl font-bold text-gray-900 mb-6">Professional Background</h3>
             <p className="text-xs text-gray-600 mb-4 leading-relaxed">
-              Currently serving as Science & Engineering Associate - AI Engineer at United Bank Limited, with primary responsibilities encompassing the development and implementation of sophisticated artificial intelligence solutions designed to optimize banking operations and enhance customer service delivery.
+              Currently serving as Assistant Manager - Data Science & AI at United Bank Limited, with primary responsibilities encompassing the development and implementation of sophisticated artificial intelligence solutions designed to optimize banking operations and enhance customer service delivery.
             </p>
             <p className="text-xs text-gray-600 mb-6 leading-relaxed">
               Educational foundation in Computer Systems Engineering from Sukkur IBA University provides comprehensive expertise in both hardware and software systems architecture, facilitating the development of robust, scalable artificial intelligence solutions tailored to enterprise-level requirements.
             </p>
             
             <div className="grid grid-cols-2 gap-6">
-              <div className="text-center p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl shadow-lg hover-lift animate-scale-in stagger-1">
-                <div className="text-xl font-bold text-blue-700 mb-1">2024</div>
+              <div className="text-center p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl shadow-lg hover-lift animate-scale-in stagger-1 overflow-hidden relative">
+                <div className="text-xl font-bold text-blue-700 mb-1 tabular-nums">{completionYear}</div>
                 <div className="text-xs font-semibold text-gray-700">Academic Completion</div>
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent shimmer"></div>
               </div>
-              <div className="text-center p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl shadow-lg hover-lift animate-scale-in stagger-2">
-                <div className="text-xl font-bold text-blue-700 mb-1">2025</div>
+              <div className="text-center p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl shadow-lg hover-lift animate-scale-in stagger-2 overflow-hidden relative">
+                <div className="text-xl font-bold text-blue-700 mb-1 tabular-nums">{commencementYear}</div>
                 <div className="text-xs font-semibold text-gray-700">Professional Commencement</div>
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent shimmer" style={{ animationDelay: '0.5s' }}></div>
               </div>
             </div>
           </div>

@@ -9,7 +9,7 @@ const Footer: React.FC = () => {
           <div>
             <h3 className="text-lg font-bold mb-3">Kashif Mujeeb, B.E.</h3>
             <p className="text-gray-400 mb-3 text-xs">
-              Science & Engineering Associate specializing in artificial intelligence solutions for the financial services industry.
+              Assistant Manager Data Science & AI specializing in artificial intelligence solutions for the financial services industry.
             </p>
             <div className="flex space-x-4">
               <a 
@@ -84,7 +84,7 @@ const Footer: React.FC = () => {
           <div>
             <h4 className="text-sm font-semibold mb-3">Professional Information</h4>
             <div className="space-y-2 text-gray-400 text-xs">
-              <p>Science & Engineering Associate - AI Engineer</p>
+              <p>Assistant Manager - Data Science & AI</p>
               <p>United Bank Limited</p>
               <p>B.E. Computer Systems Engineering</p>
               <p>Sukkur IBA University</p>

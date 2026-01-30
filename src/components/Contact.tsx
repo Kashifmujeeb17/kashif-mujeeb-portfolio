@@ -95,7 +95,7 @@ const Contact: React.FC = () => {
             <div className="mt-10 p-8 bg-white/10 rounded-2xl backdrop-blur-lg hover-lift animate-scale-in stagger-6">
               <h4 className="font-bold text-blue-100 mb-3 text-xs">Current Professional Position</h4>
               <p className="text-white text-[10px] leading-relaxed">
-                Currently serving as Science & Engineering Associate - AI Engineer at United Bank Limited, with specialized focus on developing innovative artificial intelligence solutions for the financial services industry.
+                Currently serving as Assistant Manager - Data Science & AI at United Bank Limited, with specialized focus on developing innovative artificial intelligence solutions for the financial services industry.
               </p>
             </div>
           </div>

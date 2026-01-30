@@ -1,7 +1,31 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Brain, Code, Database, Cpu, Cloud, BarChart } from 'lucide-react';
 
 const Skills: React.FC = () => {
+  const [visibleCards, setVisibleCards] = useState<number[]>([]);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          skillCategories.forEach((_, index) => {
+            setTimeout(() => {
+              setVisibleCards(prev => [...prev, index]);
+            }, index * 100);
+          });
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   const skillCategories = [
     {
       title: 'Artificial Intelligence & Machine Learning',
@@ -54,7 +78,7 @@ const Skills: React.FC = () => {
   };
 
   return (
-    <section id="skills" className="py-24 bg-gradient-to-b from-gray-50 to-white fade-in-section">
+    <section id="skills" className="py-24 bg-gradient-to-b from-gray-50 to-white fade-in-section" ref={sectionRef}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-20">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 animate-fade-in-up">
@@ -74,8 +98,9 @@ const Skills: React.FC = () => {
             return (
               <div
                 key={index}
-                className={`${colors.bg} p-8 rounded-2xl border ${colors.border} hover:shadow-2xl transition-all duration-500 hover-lift animate-scale-in group`}
-                style={{ animationDelay: `${index * 0.1}s` }}
+                className={`${colors.bg} p-8 rounded-2xl border ${colors.border} hover:shadow-2xl transition-all duration-500 hover-lift group ${
+                  visibleCards.includes(index) ? 'animate-card-reveal' : 'opacity-0'
+                }`}
               >
                 <div className="flex items-center mb-6">
                   <Icon className={`h-10 w-10 ${colors.icon} mr-4 group-hover:scale-110 transition-transform duration-300`} />

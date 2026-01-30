@@ -1,7 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChevronDown, Briefcase, GraduationCap } from 'lucide-react';
 
 const Hero: React.FC = () => {
+  const [displayedText, setDisplayedText] = useState('');
+  const fullText = 'Kashif Mujeeb';
+
+  useEffect(() => {
+    let index = 0;
+    const timer = setInterval(() => {
+      if (index <= fullText.length) {
+        setDisplayedText(fullText.slice(0, index));
+        index++;
+      } else {
+        clearInterval(timer);
+      }
+    }, 100);
+
+    return () => clearInterval(timer);
+  }, []);
+
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -21,15 +38,15 @@ const Hero: React.FC = () => {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div className="relative z-10">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 animate-fade-in-up">
-            <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent animate-gradient">
-              Kashif Mujeeb
+            <span className="bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 bg-clip-text text-transparent animate-gradient">
+              {displayedText}<span className="animate-blink">|</span>
             </span>
           </h1>
           
           <div className="flex flex-col md:flex-row items-center justify-center gap-6 mb-12 animate-fade-in-up stagger-1">
             <div className="flex items-center gap-3 text-base text-gray-700 bg-white/80 backdrop-blur-sm px-5 py-2.5 rounded-full shadow-lg hover-lift">
               <Briefcase className="h-6 w-6 text-blue-600 animate-pulse-glow" />
-              <span>AI Engineer at United Bank Limited</span>
+              <span>Assistant Manager - Data Science & AI at United Bank Limited</span>
             </div>
             <div className="hidden md:block w-2 h-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full animate-pulse"></div>
             <div className="flex items-center gap-3 text-base text-gray-700 bg-white/80 backdrop-blur-sm px-5 py-2.5 rounded-full shadow-lg hover-lift">
@@ -39,7 +56,7 @@ const Hero: React.FC = () => {
           </div>
 
           <p className="text-lg text-gray-600 mb-12 max-w-4xl mx-auto leading-relaxed animate-fade-in-up stagger-2">
-            Dedicated Science & Engineering Associate specializing in artificial intelligence applications and innovative technological solutions within the financial services sector
+            Assistant Manager Data Science & AI specializing in artificial intelligence applications and innovative technological solutions within the financial services sector
           </p>
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center animate-fade-in-up stagger-3">

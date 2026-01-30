@@ -1,9 +1,28 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Briefcase, Calendar, MapPin, Building } from 'lucide-react';
 
 const Experience: React.FC = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
   return (
-    <section id="experience" className="py-20 bg-white">
+    <section id="experience" className="py-20 bg-white" ref={sectionRef}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
@@ -15,10 +34,12 @@ const Experience: React.FC = () => {
         </div>
 
         <div className="max-w-4xl mx-auto">
-          <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300 border border-blue-100">
+          <div className={`bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl shadow-lg p-8 hover:shadow-xl transition-all duration-500 border border-blue-100 ${
+            isVisible ? 'animate-slide-in-left' : 'opacity-0'
+          }`}>
             <div className="flex flex-col md:flex-row items-start gap-6">
               <div className="flex-shrink-0">
-                <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
+                <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-800 rounded-full flex items-center justify-center animate-pulse-glow">
                   <Briefcase className="h-8 w-8 text-white" />
                 </div>
               </div>
@@ -26,7 +47,7 @@ const Experience: React.FC = () => {
               <div className="flex-grow">
                 <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-4">
                   <h3 className="text-lg font-bold text-gray-900 mb-2 lg:mb-0">
-                    Science & Engineering Associate - AI Engineer
+                    Assistant Manager - Data Science & AI
                   </h3>
                   <span className="inline-block bg-green-100 text-green-800 px-3 py-1 rounded-full text-[10px] font-semibold">
                     Current Position
